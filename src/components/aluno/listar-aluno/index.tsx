@@ -1,9 +1,11 @@
 import React from "react";
 import { ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Evento from "../../../models/Evento";
 import Aluno from "../../../models/Evento";
 import EventoService from "../../../services/evento-service";
 import Formulario from "../../Formulario";
+//import { ListItem } from 'react-native-elements'
 
 export default class ListarAlunos extends React.Component {
 
@@ -45,19 +47,39 @@ export default class ListarAlunos extends React.Component {
     }
 
     render(): ReactNode {
-        const { data, value, dataInsert } = this.state;
-        const animalList = data.map((item) => {
+        const { data } = this.state;
+        const animalList = data.map((item: Evento) => {
             return (
-                <View key={item.id}
-                    id={item.id} >
-                    <Text>id: {item.id} nome:{item.nome}</Text>
+                <View key={item.id} >
+                    <View style={styles.linha}>
+                        <View style={{width:'75%', height:'15%'}}>
+                            <View style={[styles.coluna,styles.coluna1]}>
+                                <View style={styles.datas}>
+                                    <Text style={{fontSize: 16}}>{item.dataInicio} - {item.dataFim}</Text>
+                                </View>
+                                <View style={styles.linha}>
+                                    <Text>{item.nome} </Text>
+                                </View>
+                                <View style={styles.linha}>
+                                    <Text>{item.descricao}</Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{width:'25%', height:'15%'}}>
+                            <View style={[styles.coluna,styles.coluna2]}>
+                                <View >
+
+                                </View>
+                            </View>
+                        </View>
+                    </View>                    
                 </View>
             )
         })
 
         return (
 
-
+               
             <View style={styles.container}>
                 {animalList}
             </View>
@@ -66,10 +88,38 @@ export default class ListarAlunos extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    linha: {
+        
+        width:'100%',        
+        flex: 1,
+        flexDirection: "row",
+        height: '15%'
+        
+    },
+    datas:{
+        backgroundColor:"#443222",
+        width:'100%',
+    },
+    coluna: {        
+        alignItems:"flex-start",
+        height: '15%',
+        flex: 1,
+        flexDirection: "column"
+    },
+    coluna1:{
+        alignItems:"flex-start",
+        backgroundColor:"#768765",
+        
+    },
+    coluna2:{
+        backgroundColor:"#654321",
+        
+    },
+    container: {        
+        width:'100%',
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
     },
 })

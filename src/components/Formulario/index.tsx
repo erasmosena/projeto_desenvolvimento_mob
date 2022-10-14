@@ -1,48 +1,40 @@
-import { Button, Dimensions, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, Platform, StyleSheet, Text, TextInput, View } from "react-native";
 
-import React, { useState, useEffect } from 'react';
+import React, { } from 'react';
 
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import EventoService from "../../services/evento-service";
-import Aluno from "../../models/Evento";
-
-let STORAGE_KEY = '@ultima_atualizacao';
-
-const TextField = ({ label, ...inputProps }) => (
-  <View style={styles.container}>
-    <Text style={styles.label}>{label}</Text>
-    <TextInput
-      style={styles.input}
-      {...inputProps} />
-  </View>
-)
-
+import { Calendar } from "react-native-calendars";
+import TextField from "../TextField";
+import Datepicker from "../Datepicker";
+import Evento from "../../models/Evento";
 
 export default class Formulario extends React.Component {
   data = new Date();
   state = {
-    dataUltimaAtualizacao: "",
+    show: false,
     id: "",
     nome: "",
     descricao: "",
     dataInicio: `${this.data.toLocaleDateString()} ${this.data.toLocaleTimeString()}`,
-    dataFim: `${this.data.toLocaleDateString()} ${this.data.toLocaleTimeString()}`
+    dataFim: `${this.data.toLocaleDateString()} ${this.data.toLocaleTimeString()}`,
+    date: new Date(1598051730000),
+    mode: 'date'
 
   }
 
-  addToStorage = (aluno: any) => {
-    EventoService.addData(aluno)
-      .then((response: any) => {
-        console.log(`Aluno inserido ${aluno}`)
-      }), (error) => {
-        console.log(error);
-      }
-  }
 
 
   salvar = () => {
-    this.addToStorage(this.state)
+    let evento:any  =  { nome:this.state.nome, descricao:this.state.descricao, dataInicio: this.state.dataInicio, dataFim: this.state.dataFim}
+    EventoService.addData(evento)
+    .then((response: any) => {
+      console.log(`Aluno inserido ${evento}`)
+    }), (error) => {
+      console.log(error);
+    }
+    
   }
+
 
   // useEffect(() => {
   //   readData(); 
@@ -59,9 +51,13 @@ export default class Formulario extends React.Component {
     }
   }
 
-  render() {
 
-    const { id, nome, descricao, dataInicio, dataFim } = this.state;
+  render() {
+    const { id, nome, descricao, dataInicio, dataFim, date, mode, show } = this.state;
+
+    const minDate = new Date().toISOString()
+
+
 
     return (
 
@@ -74,14 +70,32 @@ export default class Formulario extends React.Component {
           <TextField label={'Descricao do evento'} value={descricao}
             onChangeText={(descricao: any) => { this.setState({ descricao: descricao }) }}
             placeholder={'Escolha uma descrição para o evento'} />
-
-          <TextField label={'Data e hora de inicio'} value={dataInicio}
+          
+          <Datepicker  key={'dataInicio'}
+            label= {'Data e hora de inicio'}
+            placeholder = {'Que horas irá começar o evento ?'}
+            initialDate={dataInicio} 
+            onDayPress={(day: any) => {
+              this.setState({ dataInicio: `${day.dateString}` })
+            }}
+            minDate={minDate}
             onChangeText={(dataInicio: any) => { this.setState({ dataInicio: dataInicio }) }}
-            placeholder={'Que horas irá começar o evento ?'} />
+            value={dataInicio}
 
-          <TextField label={'Data e hora de término'} value={dataFim}
-            onChangeText={(dataFim: any) => { this.setState({ dataFim: dataFim }) }}
-            placeholder={'Qual o horário irá finalizar? '} />
+          />
+
+          <Datepicker key={'dataFim'}
+            label= {'Data e hora de término'}
+            placeholder = {'Qual o horário irá finalizar? '}
+            initialDate={dataFim} 
+            onDayPress={(day: any) => {              
+              this.setState({ dataFim: `${day.dateString}` })              
+            }}
+            minDate={minDate}
+            onChangeText={(dataFim: any) => { this.setState({ dataFim: dataFim }) } }
+            value={dataFim}
+          />
+
         </View>
         <View style={styles.button}>
           <Button onPress={this.salvar} title={'Salvar'} />
@@ -92,28 +106,23 @@ export default class Formulario extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  button:{
-    
-  }, 
-  campos: {
-    
-    paddingBottom: 20
-  }, 
-  input: {
-    fontSize: 18
-  },
-  label: {
-    fontSize: 20
-  },
-  container: {
+  datePickerStyle: {
 
   },
+  button: {
+
+  },
+  campos: {
+
+    paddingBottom: 20
+  },
+  
   ultimaAtualizacao: {
     paddingTop: 20
   },
   mainContainer: {
-    
-    justifyContent:"space-between", 
+
+    justifyContent: "space-between",
     flexDirection: "column",
     height: '100%'
   }
