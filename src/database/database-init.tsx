@@ -30,6 +30,8 @@ export default class DatabaseInit {
                 );`,
             //  `delete from  evento;`,
              `insert into evento(nome,descricao,data_inicio, data_fim) 
+             values('Formatura','Formatura do curso de ADS - Estacio','01/01/2023 19:00','01/01/2023 22:00');`,
+             `insert into evento(nome,descricao,data_inicio, data_fim) 
              values('Formatura','Formatura do curso de ADS - Estacio','01/01/2023 19:00','01/01/2023 22:00');`
         ];
 

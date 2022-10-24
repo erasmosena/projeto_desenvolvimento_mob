@@ -6,6 +6,7 @@ import Aluno from "../../../models/Evento";
 import EventoService from "../../../services/evento-service";
 import Formulario from "../../Formulario";
 //import { ListItem } from 'react-native-elements'
+import { FlashList } from "@shopify/flash-list";
 
 export default class ListarAlunos extends React.Component {
 
@@ -13,6 +14,16 @@ export default class ListarAlunos extends React.Component {
         super(props)
         this.findAll()
     }
+
+    
+    data = [
+    {
+      title: "First Item",
+    },
+    {
+      title: "Second Item",
+    },
+  ];
 
     state = {
         data: []
@@ -40,15 +51,17 @@ export default class ListarAlunos extends React.Component {
     // }
 
     //escuta atualizações na lista
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.data !== this.state.data) {
-            this.findAll();
-        }
-    }
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (prevState.data !== this.state.data) {
+    //         this.findAll();
+    //     }
+    // }
 
     render(): ReactNode {
         const { data } = this.state;
         const animalList = data.map((item: Evento) => {
+            console.log(JSON.stringify(item.nome))
+            console.log(JSON.stringify(item.id))
             return (
                 <View key={item.id} >
                     <View style={styles.linha}>
@@ -84,6 +97,8 @@ export default class ListarAlunos extends React.Component {
                 {animalList}
             </View>
         );
+
+        
     }
 }
 
@@ -97,7 +112,7 @@ const styles = StyleSheet.create({
         
     },
     datas:{
-        backgroundColor:"#443222",
+        // backgroundColor:"#443222",
         width:'100%',
     },
     coluna: {        
@@ -108,11 +123,11 @@ const styles = StyleSheet.create({
     },
     coluna1:{
         alignItems:"flex-start",
-        backgroundColor:"#768765",
+        // backgroundColor:"#768765",
         
     },
     coluna2:{
-        backgroundColor:"#654321",
+        // backgroundColor:"#654321",
         
     },
     container: {        
