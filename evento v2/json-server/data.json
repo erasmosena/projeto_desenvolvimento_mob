@@ -1,0 +1,11 @@
+{
+    "eventos": [
+        { "id": 1, "idUsuario": 1, "nome": "nome1", "descricao": "descricao2", "dataInicio": "01/11/2022", "dataFim": "01/11/2022" },
+        { "id": 2, "idUsuario": 1, "nome": "nome2", "descricao": "descricao2", "dataInicio": "02/11/2022", "dataFim": "02/11/2022" }, 
+        { "id": 3, "idUsuario": 2, "nome": "nome3", "descricao": "descricao3", "dataInicio": "03/11/2022", "dataFim": "03/11/2022" }
+    ],
+    "usuarios": [
+        {"id":1, "nome":"Erasmo Sena", "login":"erasmo", "senha":"asdf"},      
+        {"id":1, "nome":"Erasmo Sena 2 ", "login":"erasmo2", "senha":"asdf"}      
+    ]
+  }

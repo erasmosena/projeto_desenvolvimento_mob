@@ -1,0 +1,1 @@
+export const USUARIO_LOGADO_KEY = 'usuario_logado';
