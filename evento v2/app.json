@@ -1,4 +1,9 @@
 {
-  "name": "navegacao",
-  "displayName": "navegacao"
+  "expo": {
+    "slug": "navegacao",
+    "name": "navegacao",
+    "sdkVersion": "47.0.0",
+    "entryPoint": ".vscode\\exponentIndex.js"
+  },
+  "name": "navegacao"
 }

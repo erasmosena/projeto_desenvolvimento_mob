@@ -22,7 +22,6 @@ export default function Home() {
 
     return (
         <View style={styles.container}>
-            <Text>{usuario?.nome}</Text>
             <View style={{ flex: 1}}>
                 <BotaoPadrao titulo="Listar Eventos" onPress={() => navigation.navigate('ListarEventos')} />
                 <BotaoPadrao titulo="Adicionar Novo Evento" onPress={() => navigation.navigate('AdicionarEventos')} />
