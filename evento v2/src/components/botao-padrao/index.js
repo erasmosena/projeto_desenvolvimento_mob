@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const BotaoPadrao = ({titulo, onPress, style}) => (
     <View style={[styles.container, style]}>
-        <TouchableOpacity style={styles.areaTexto}
+        <TouchableOpacity style={styles.button}
             onPress={onPress}
         >
             <Text style={styles.texto}>{titulo}</Text>
@@ -29,7 +29,16 @@ const styles = StyleSheet.create({
     },
     texto: {
         fontSize:20, 
-    }
+    },
+    button: {
+        backgroundColor: '#38a69d',
+        width: '100%',
+        borderRadius: 4,
+        paddingVertical: 8,
+        marginTop: 14,
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
 })
 
 

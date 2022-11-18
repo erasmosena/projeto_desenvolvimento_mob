@@ -21,18 +21,22 @@ export default function App() {
   return (
     <NavigationContainer >
       <stack.Navigator >
-      <stack.Screen name="SignIn"
-          options={{
-            headerShown: false
-          }}
-          component={SignIn} />
-        <stack.Screen name="Welcome"
+
+      <stack.Screen name="Welcome"
           options={{
             headerShown: false
           }}
           component={Welcome} />
-          
-          <stack.Screen name="Login"
+
+        <stack.Screen name="SignIn"
+          options={{
+            headerShown: false
+          }}
+          component={SignIn} />
+
+        
+
+        <stack.Screen name="Login"
           options={{
             // title: 'Login',
             // headerStyle: {
@@ -42,18 +46,18 @@ export default function App() {
             headerShown: false
           }}
           component={EfetuarLogin} />
-          <stack.Screen name="Home"
+        <stack.Screen name="Home"
           options={{
             headerShown: false
           }}
           component={Home} />
-          <stack.Screen name="ListarEventos"
+        <stack.Screen name="ListarEventos"
           options={{
             title: 'Lista Eventos',
           }}
           component={ListaEventos} />
 
-         <stack.Screen name="AdicionarEventos"
+        <stack.Screen name="AdicionarEventos"
           options={{ title: 'Adicionar um novo evento' }}
           component={AdicionarEventos} />
 

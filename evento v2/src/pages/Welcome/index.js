@@ -18,11 +18,10 @@ export default function Welcome() {
     </View>
     <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
        <Text style={styles.title}>Gerencie seus Compromissos de forma rápida e Simples</Text>
-       <Text style={styles.text}>Faça o Login</Text>
 
        <TouchableOpacity
        onPress={() => navigation.navigate('SignIn')} 
-       style={styles.buttton}>
+       style={styles.button}>
         <Text style={styles.buttonText}>Acessar</Text>
        </TouchableOpacity>
     </Animatable.View>

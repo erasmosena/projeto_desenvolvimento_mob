@@ -5,6 +5,7 @@ import BotaoPadrao from "../../components/botao-padrao";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { USUARIO_LOGADO_KEY } from "../../Services/Constantes";
 import { notificar } from "../../Services/NotificacoesService";
+import CommonDataManager from "../../Services/CommonDataManager";
 
 export default function Home() {
 
@@ -12,6 +13,8 @@ export default function Home() {
     const [usuario, setUsuario] = useState(null);
 
     const [login, setLogin] = useState(null);
+
+    let commonData = CommonDataManager.getInstance();
 
     async function buscarUsuarioLogado() {
         await AsyncStorage.getItem(USUARIO_LOGADO_KEY).then((value) => {
@@ -24,8 +27,8 @@ export default function Home() {
     }, []);
 
     useEffect(() => {        
-        setLogin(usuario?.login);
-        alert(JSON.stringify(usuario))
+        commonData.setUser(usuario);
+        notificar(JSON.stringify(commonData.getUser()));
     }, [usuario]);
 
 
@@ -34,7 +37,7 @@ export default function Home() {
 
             <View style={{ flex: 1, flexDirection: 'column' }}>
                 <View style={{ justifyContent: 'flex-start', flex: 2, alignItems: 'flex-start', padding:15 }}>
-                    <Text style={{ fontSize: 30, color: 'black', marginTop: 20 }}> Olá {login}, bem vindo.</Text>
+                    {/* <Text style={{ fontSize: 30, color: 'black', marginTop: 20 }}> Olá {commonData.getUser()?.nome}, bem vindo.</Text> */}
                 </View>
                 <View style={{ height: 50, justifyContent: 'center', flex: 1, alignItems: 'center' }}>
                     <BotaoPadrao titulo="Listar Eventos" onPress={() => navigation.navigate('ListarEventos')} />
@@ -43,7 +46,7 @@ export default function Home() {
                     <BotaoPadrao titulo="Adicionar Novo Evento" onPress={() => navigation.navigate('AdicionarEventos')} />
                 </View>
                 <View style={{ height: 50, justifyContent: 'center', flex: 1, alignItems: 'center' }}>
-                    <BotaoPadrao titulo="Sair" onPress={() => navigation.navigate('Login')} />
+                    <BotaoPadrao titulo="Sair" onPress={() => navigation.navigate('SignIn')} />
                 </View>
                 <View style={{ height: 50, justifyContent: 'center', flex: 2, alignItems: 'center' }}></View>
             </View>
