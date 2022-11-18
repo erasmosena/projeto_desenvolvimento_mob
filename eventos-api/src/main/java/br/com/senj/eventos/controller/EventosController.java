@@ -22,9 +22,9 @@ public class EventosController {
     private EventoRepository eventoRepository;
 
 
-    @GetMapping("/usuario/{id}")
-    public List<EventoDTO> listarTodos(@PathVariable ("id") Long id){
-        return eventoRepository.findByIdUsuario(id).stream().map(it-> eventoMapper.eventoToEventoDto(it))
+    @GetMapping("/usuario/{identificador}")
+    public List<EventoDTO> listarTodos(@PathVariable ("identificador") String identificador){
+        return eventoRepository.findByIdentificadorUsuario(identificador).stream().map(it-> eventoMapper.eventoToEventoDto(it))
                 .collect(Collectors.toList());
     }
 

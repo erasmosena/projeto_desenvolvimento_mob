@@ -16,14 +16,13 @@ export const logar = async (login, senha) => {
     
     try {
         let usuario;
-        await api.get(`/usuarios?login=${login}&senha=${senha}`)
-        .then(res => {            
+        await api.post(`/usuarios/login`,{"login":"erasmo", "senha":"asdf"})
+        .then(res => {
             usuario = res.data;            
         }); 
         if( usuario != undefined){
             await AsyncStorage.setItem(USUARIO_LOGADO_KEY, JSON.stringify(usuario)); 
         }
-        notificar(JSON.stringify(usuario))
         return usuario;
     } catch (error) {
         console.error(error);

@@ -27,7 +27,6 @@ export default function AdicionarEventos() {
 
     const onChangeDate = (event, selectedDate) => {
         const currentDate = selectedDate;
-        alert(JSON.stringify(selectedDate.toString("yyyy-mm-dd")));
         setDataInicio(currentDate);
     };
     const onChangeTime = (event, selectedDate) => {
@@ -49,10 +48,12 @@ export default function AdicionarEventos() {
         if (dataInicio == '') {
             setDataInicio(new Date().toDateString());
         }
+
         const onchage =  (event, selectedDate) => {
             const currentDate = selectedDate;
             setDataInicio(currentDate);
         }
+
         DateTimePickerAndroid.open({
             value: new Date(),
             onchage,
@@ -66,10 +67,12 @@ export default function AdicionarEventos() {
         if (dataFim == '') {
             setDataFim(new Date().toDateString());
         }
+        
         const onchage =  (event, selectedDate) => {
             const currentDate = selectedDate;
             setDataFim(currentDate);
         }
+
         DateTimePickerAndroid.open({
             value: new Date(),
             onchage,
@@ -96,20 +99,23 @@ export default function AdicionarEventos() {
     };
 
     const showTimepickerFim = () => {
-        
         if (horaFim == '') {
             setHoraFim(new Date().toDateString());
         }
+
         const onchage =  (event, selectedDate) => {
             const currentDate = selectedDate;
-            setHoraFim(currentDate.toTimeString());
+            console.log(currentDate);
+            setHoraFim(currentDate.toLocaleTimeString());
         }
+
         DateTimePickerAndroid.open({
-            value: new Date(),
+            value: new Date().toLocaleTimeString(),
             onchage,
             mode: 'time',
             is24Hour: true,
         });
+
     };
 
 
@@ -157,7 +163,7 @@ export default function AdicionarEventos() {
                     </View>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <TextField label={'Hora de término'} value={horaInicio}
+                        <TextField label={'Hora de término'} value={horaFim}
                             onChangeText={(horaFim) => { setHoraFim(horaFim) }}
                             placeholder={'Hora de término'} />
                         <TouchableOpacity onPress={() => showTimepickerFim()} style={styles.icone}>

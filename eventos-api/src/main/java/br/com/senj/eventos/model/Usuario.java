@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 
 @Data
@@ -22,6 +23,9 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable = false, unique = true, updatable = false, columnDefinition="CHAR(36)")
+    private UUID identificador = UUID.randomUUID();
 
     @Column(nullable = false)
     private String nome;

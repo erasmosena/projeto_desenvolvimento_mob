@@ -44,8 +44,8 @@ public class UsuariosController {
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public LoginDTO login(@RequestBody LoginDTO loginDto){
-        Usuario usuario = usuarioRepository.findByLogin(loginDto.getLogin());
-        return new LoginDTO();
+        Usuario usuario = usuarioRepository.findByLoginAndSenha(loginDto.getLogin(), loginDto.getSenha());
+        return usuarioMapper.usuarioToLoginDto(usuario);
 
     }
 

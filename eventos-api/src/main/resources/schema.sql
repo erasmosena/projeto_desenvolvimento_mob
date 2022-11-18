@@ -1,0 +1,3 @@
+select 1;
+--create table evento (id  bigserial not null, data_fim timestamp not null, data_inicio timestamp not null, descricao varchar(255) not null, id_usuario int8 not null, nome varchar(255) not null, primary key (id))
+--create table usuario (id  bigserial not null, identificador uuid not null, login varchar(255) not null, nome varchar(255) not null, senha varchar(255) not null, primary key (id))
