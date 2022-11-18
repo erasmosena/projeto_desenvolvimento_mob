@@ -6,6 +6,8 @@ import AdicionarEventos from "./src/pages/Eventos/AdicionarEvento";
 import ListaEventos from "./src/pages/Eventos/ListaEventos";
 import Home from "./src/pages/Home";
 import EfetuarLogin from "./src/pages/Login/EfetuarLogin";
+import Welcome from "./src/pages/Welcome";
+import SignIn from "./src/pages/Login/SignIn";
 
 // import Home from "./src/pages/Home";
 // import ListaEventos from "./src/pages/Eventos/ListaEventos";
@@ -19,6 +21,17 @@ export default function App() {
   return (
     <NavigationContainer >
       <stack.Navigator >
+      <stack.Screen name="SignIn"
+          options={{
+            headerShown: false
+          }}
+          component={SignIn} />
+        <stack.Screen name="Welcome"
+          options={{
+            headerShown: false
+          }}
+          component={Welcome} />
+          
           <stack.Screen name="Login"
           options={{
             // title: 'Login',
