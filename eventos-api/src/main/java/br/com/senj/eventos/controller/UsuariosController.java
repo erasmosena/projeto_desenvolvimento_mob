@@ -11,9 +11,11 @@ import br.com.senj.eventos.repository.EventoRepository;
 import br.com.senj.eventos.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -37,15 +39,19 @@ public class UsuariosController {
     @ResponseStatus(HttpStatus.CREATED)
     public UsuarioDTO inserir(@RequestBody UsuarioDTO dto){
         Usuario usuario = usuarioMapper.usuarioDtoToUsuario(dto);
+        usuario.setIdentificador(UUID.randomUUID());
         return usuarioMapper.usuarioToUsuarioDto(usuarioRepository.save(usuario));
 
     }
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public LoginDTO login(@RequestBody LoginDTO loginDto){
+    public ResponseEntity<LoginDTO> login(@RequestBody LoginDTO loginDto){
         Usuario usuario = usuarioRepository.findByLoginAndSenha(loginDto.getLogin(), loginDto.getSenha());
-        return usuarioMapper.usuarioToLoginDto(usuario);
+        if( usuario == null ){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(usuarioMapper.usuarioToLoginDto(usuario));
 
     }
 

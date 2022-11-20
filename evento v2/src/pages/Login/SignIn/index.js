@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable'
+import BotaoPadrao from '../../../components/botao-padrao';
 import { USUARIO_LOGADO_KEY } from '../../../Services/Constantes';
 import { logar } from '../../../Services/LoginService';
 import { notificar } from '../../../Services/NotificacoesService';
@@ -16,13 +17,17 @@ export default function SignIn() {
   const [senha, setSenha] = useState('');
 
 
-  function login() {
-    let usuario = logar(email, senha)
-    if (usuario != undefined) {
+  async function login() {
+    let usuario = await logar(email, senha);
+    if (usuario != undefined && usuario.identificador !== null  ) {
       navigation.navigate('Home')
     } else {
       notificar("Não foi possível efetuar o login.");
     }
+  }
+
+  function signon(){
+    navigation.navigate('SignOn')
   }
 
 
@@ -36,6 +41,7 @@ export default function SignIn() {
         <Text style={styles.title}>Email</Text>
         <TextInput
           placeholder='Digite o e-mail do usuário...'
+          value={email}
           onChangeText={(email) => setEmail(email)}
           style={styles.input}
         />
@@ -43,15 +49,16 @@ export default function SignIn() {
         <Text style={styles.title}>Senha</Text>
         <TextInput
           placeholder='Digite sua senha...'
+          value={senha}
           onChangeText={(senha) => setSenha(senha)}
           style={styles.input}
         />
 
-        <TouchableOpacity style={styles.button} onPress={login}>
-          <Text style={styles.buttonText}>Acessar</Text>
-        </TouchableOpacity>
+        <BotaoPadrao titulo="Acessar" onPress={login}/>
 
-        <TouchableOpacity style={styles.buttonRegister}>
+        <TouchableOpacity style={styles.buttonRegister}
+        onPress={signon}
+        >
           <Text style={styles.registerText}>Não Possui uma conta? Cadastre-se</Text>
         </TouchableOpacity>
 

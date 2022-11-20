@@ -1,53 +1,52 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
+import { View, StyleSheet, FlatList, Text } from 'react-native'
 import ItemLista from "../../../components/ItemLista";
-import { buscar, findAll } from "../../../Services/EventosService";
 import { USUARIO_LOGADO_KEY } from "../../../Services/Constantes";
+import { findAll } from "../../../Services/EventosService";
+import { notificar } from "../../../Services/NotificacoesService";
 
 
 export default function ListaEventos() {
-    
+
+
+
+
     const [data, setData] = useState([]);
-    const [usuario, setUsuario] = useState(null);
+    const [identificadorUsuario, setIdentificadorUsuario] = useState("");
     
-    async function buscarUsuarioLogado() {
-        await AsyncStorage.getItem(USUARIO_LOGADO_KEY).then((value) => {            
-            setUsuario(value);           
-            console.log(value);
-        });         
+    async function buscarUsuario() {
+        id = await AsyncStorage.getItem(USUARIO_LOGADO_KEY);
+        setIdentificadorUsuario(id); 
     }
+    buscarUsuario();
 
-    useEffect(() => {
-        buscarUsuarioLogado();    
-        console.log(usuario);
-    }, []);
 
+    useEffect(() => {        
+        if( identificadorUsuario != undefined && identificadorUsuario != ''){
+            buscarTodos(identificadorUsuario);        
+        }
+        
+    }, [identificadorUsuario]);
 
     function buscarTodos() {
-        findAll().then(it => {
+        findAll(identificadorUsuario).then(it => {
             setData(it.data)
+        }).catch(it => {
+            console.error(it.data)
         });
     }
-    useEffect(() => {
-        buscarTodos(usuario?.identificador);
-    }, [usuario]);
-    
-
-    
-
-
 
     return (
         <View style={styles.container}>
-
             <FlatList style={styles.lista}
                 data={data}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => <ItemLista data={item} />}
             />
         </View>
-    );
+    )
+
 }
 
 const styles = StyleSheet.create({
@@ -58,6 +57,7 @@ const styles = StyleSheet.create({
 
     },
     lista: {
+        backgroundColor: '#ffffff',
         width: '100%'
     }
 })

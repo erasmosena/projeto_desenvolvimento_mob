@@ -12,26 +12,6 @@ export default function Home() {
     const navigation = useNavigation();
     const [usuario, setUsuario] = useState(null);
 
-    const [login, setLogin] = useState(null);
-
-    let commonData = CommonDataManager.getInstance();
-
-    async function buscarUsuarioLogado() {
-        await AsyncStorage.getItem(USUARIO_LOGADO_KEY).then((value) => {
-            setUsuario(value);
-        });
-    }
-
-    useEffect(() => {
-        buscarUsuarioLogado();
-    }, []);
-
-    useEffect(() => {        
-        commonData.setUser(usuario);
-        notificar(JSON.stringify(commonData.getUser()));
-    }, [usuario]);
-
-
     return (
         <View style={styles.container}>
 

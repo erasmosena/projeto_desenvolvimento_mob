@@ -5,9 +5,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AdicionarEventos from "./src/pages/Eventos/AdicionarEvento";
 import ListaEventos from "./src/pages/Eventos/ListaEventos";
 import Home from "./src/pages/Home";
-import EfetuarLogin from "./src/pages/Login/EfetuarLogin";
+import EfetuarLogin from "./src/pages/Login/SignOn";
 import Welcome from "./src/pages/Welcome";
 import SignIn from "./src/pages/Login/SignIn";
+import SignOn from "./src/pages/Login/SignOn";
 
 // import Home from "./src/pages/Home";
 // import ListaEventos from "./src/pages/Eventos/ListaEventos";
@@ -33,6 +34,12 @@ export default function App() {
             headerShown: false
           }}
           component={SignIn} />
+
+        <stack.Screen name="SignOn"
+          options={{
+            headerShown: false
+          }}
+          component={SignOn} />
 
         
 

@@ -4,14 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 public class EventoDTO {
 
-    private long id;
+    private Long id ;
 
-    private long idUsuario;
+    private String identificadorUsuario;
 
     private String nome;
 

@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const BotaoPadrao = ({titulo, onPress, style}) => (
-    <View style={[styles.container, style]}>
-        <TouchableOpacity style={styles.button}
+const BotaoPadrao = ({titulo, onPress,style, style2}) => (
+    <View style={[styles.container]}>
+        <TouchableOpacity style={[styles.button]}
             onPress={onPress}
         >
             <Text style={styles.texto}>{titulo}</Text>
@@ -13,7 +13,7 @@ const BotaoPadrao = ({titulo, onPress, style}) => (
 
 const styles = StyleSheet.create({
     container:{
-        padding: 15, 
+        
         justifyContent: 'center', 
         alignItems: 'center', 
         flexDirection: 'row',
@@ -31,9 +31,10 @@ const styles = StyleSheet.create({
         fontSize:20, 
     },
     button: {
+
         backgroundColor: '#38a69d',
         width: '100%',
-        borderRadius: 4,
+        borderRadius: 25,
         paddingVertical: 8,
         marginTop: 14,
         justifyContent: 'center',

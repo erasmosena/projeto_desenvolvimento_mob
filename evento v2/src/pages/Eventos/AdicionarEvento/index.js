@@ -1,123 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Modal, TouchableHighlight, TouchableOpacity, Button } from 'react-native'
 import TextField from "../../../components/TextField";
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Feather from 'react-native-vector-icons/Feather'
+
 import BotaoPadrao from "../../../components/botao-padrao";
 import Datepicker from "../../../components/Datepicker";
-import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import { notificar } from "../../../Services/NotificacoesService";
+import { adicionar } from "../../../Services/EventosService";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { USUARIO_LOGADO_KEY } from "../../../Services/Constantes";
 
 export default function AdicionarEventos() {
+
+    const navigation = useNavigation();
+
     const [nome, setNome] = useState('')
     const [descricao, setDescricao] = useState('')
     const [dataInicio, setDataInicio] = useState('')
-    const [horaInicio, setHoraInicio] = useState('')
     const [dataFim, setDataFim] = useState('')
-    const [horaFim, setHoraFim] = useState('')
+
+    const [identificadorUsuario, setIdentificadorUsuario] = useState("");
+    
+    async function buscarUsuario() {
+        id = await AsyncStorage.getItem(USUARIO_LOGADO_KEY);
+        setIdentificadorUsuario(id); 
+    }
+    buscarUsuario();
 
 
-    const [modalVisibleDataInicio, setModalVisibleDataInicio] = useState(false)
-    const [modalVisibleDataFim, setModalVisibleDataFim] = useState(false)
 
-    const minDate = new Date().toISOString()
+
+    const minDate = new Date().toString()
+    const initialDate = new Date().toString();
+
+
+    // useEffect(()=>{notificar(dataInicio)}, [dataInicio]);
+    // useEffect(()=>{notificar(dataFim)}, [dataFim]);
 
     const salvar = () => {
-        console.log("Salvar");
+        let evento = {
+            identificadorUsuario: identificadorUsuario,  
+            nome:nome, 
+            descricao: descricao, 
+            dataInicio:dataInicio, 
+            dataFim: dataFim
+        };
+        adicionar(evento)
+        .then( it=> {
+            notificar("Evento inserido");
+            navigation.goBack()
+        })
+        .catch(it=>notificar(`erro ao inserir\n\n ${JSON.stringify(it)}`));
+        
     }
-
-    const onChangeDate = (event, selectedDate) => {
-        const currentDate = selectedDate;
-        setDataInicio(currentDate);
-    };
-    const onChangeTime = (event, selectedDate) => {
-        const currentDate = selectedDate;
-        setDataInicio(currentDate);
-    };
-
-    const showMode = (currentMode, valorInicial) => {
-        const onchage = (currentMode == 'Date') ? onChangeDate : onChangeTime;
-        DateTimePickerAndroid.open({
-            value: new Date(),
-            onchage,
-            mode: currentMode,
-            is24Hour: true,
-        });
-    };
-
-    const showDatepickerInicio = () => {
-        if (dataInicio == '') {
-            setDataInicio(new Date().toDateString());
-        }
-
-        const onchage =  (event, selectedDate) => {
-            const currentDate = selectedDate;
-            setDataInicio(currentDate);
-        }
-
-        DateTimePickerAndroid.open({
-            value: new Date(),
-            onchage,
-            mode: 'date',
-            is24Hour: true,
-        });
-
-    };
-
-    const showDatepickerFim = () => {
-        if (dataFim == '') {
-            setDataFim(new Date().toDateString());
-        }
-        
-        const onchage =  (event, selectedDate) => {
-            const currentDate = selectedDate;
-            setDataFim(currentDate);
-        }
-
-        DateTimePickerAndroid.open({
-            value: new Date(),
-            onchage,
-            mode: 'date',
-            is24Hour: true,
-        });
-    };
-
-    const showTimepickerInicio = () => {
-        
-        if (horaInicio == '') {
-            setHoraInicio(new Date().toDateString());
-        }
-        const onchage =  (event, selectedDate) => {
-            const currentDate = selectedDate;
-            setHoraInicio(currentDate.toTimeString());
-        }
-        DateTimePickerAndroid.open({
-            value: new Date(),
-            onchage,
-            mode: 'time',
-            is24Hour: true,
-        });
-    };
-
-    const showTimepickerFim = () => {
-        if (horaFim == '') {
-            setHoraFim(new Date().toDateString());
-        }
-
-        const onchage =  (event, selectedDate) => {
-            const currentDate = selectedDate;
-            console.log(currentDate);
-            setHoraFim(currentDate.toLocaleTimeString());
-        }
-
-        DateTimePickerAndroid.open({
-            value: new Date().toLocaleTimeString(),
-            onchage,
-            mode: 'time',
-            is24Hour: true,
-        });
-
-    };
-
 
 
     return (
@@ -134,44 +69,30 @@ export default function AdicionarEventos() {
                         placeholder={'Escolha uma descrição para o evento'} />
 
 
-                    <View style={{ flexDirection: 'row' }}>
-                        <TextField label={'Data Inicio'} value={dataInicio}
-                            onChangeText={(dataInicio) => { setDataInicio(dataInicio) }}
-                            placeholder={'Data de inicio'} />
-                        <TouchableOpacity onPress={() => showDatepickerInicio()} style={styles.icone}>
-                            <FontAwesome name="calendar" size={20} />
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={{ flexDirection: 'row' }}>
-                        <TextField label={'Hora Inicio'} value={horaInicio}
-                            onChangeText={(horaInicio) => { setHoraInicio(horaInicio) }}
-                            placeholder={'Hora de inicio'} />
-                        <TouchableOpacity onPress={() => showTimepickerInicio()} style={styles.icone}>
-                            <FontAwesome name="clock-o" size={20} />
-                        </TouchableOpacity>
-                    </View>
-
-
-                    <View style={{ flexDirection: 'row' }}>
-                        <TextField label={'Data'} value={dataFim}
-                            onChangeText={(dataFim) => { setDataFim(dataFim) }}
-                            placeholder={'Data e hora de término'} />
-                        <TouchableOpacity onPress={() => showDatepickerFim()} style={styles.icone}>
-                            <FontAwesome name="calendar" size={20} />
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={{ flexDirection: 'row' }}>
-                        <TextField label={'Hora de término'} value={horaFim}
-                            onChangeText={(horaFim) => { setHoraFim(horaFim) }}
-                            placeholder={'Hora de término'} />
-                        <TouchableOpacity onPress={() => showTimepickerFim()} style={styles.icone}>
-                            <FontAwesome name="clock-o" size={20} />
-                        </TouchableOpacity>
-                    </View>
-
+                    <Datepicker key={'dataInicio'}
+                        label={'Data'}
+                        placeholder={'Qual a data do evento '}
+                        //initialDate={initialDate}
+                        onDayPress={(data) => {
+                            setDataInicio(data);
+                        }}
+                        minDate={minDate}
+                        onChangeText={(data) => setDataInicio(data)}
+                        initValue={dataInicio}
+                    />
+                    <Datepicker data={dataFim} key={'dataFim'}
+                        label={'Data de término'}
+                        placeholder={'Em qual data irá finalizar? '}
+                        //initialDate={initialDate}
+                        onDayPress={(data) => {
+                            setDataFim(data);
+                        }}
+                        minDate={minDate}
+                        onChangeText={(data) => setDataFim(data)}
+                        initValue={dataFim}
+                    />
                 </View>
+
                 <View style={styles.button}>
                     <BotaoPadrao titulo='Salvar' onPress={salvar} />
                 </View>
@@ -181,8 +102,11 @@ export default function AdicionarEventos() {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    mainContainer: {
         margin: 5,
+    },
+    container: {
+        margin: 20,
         marginTop: 20,
         flex: 1,
         justifyContent: 'flex-start',
@@ -195,9 +119,7 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 20
     },
-    icone: {
-        margin: 5
-    },
+
     modal: {
         margin: 15,
     },

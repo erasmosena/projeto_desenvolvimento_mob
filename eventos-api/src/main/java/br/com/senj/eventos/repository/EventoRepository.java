@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface EventoRepository extends JpaRepository<Evento,Long> {
@@ -16,5 +18,10 @@ public interface EventoRepository extends JpaRepository<Evento,Long> {
             " inner join usuario u on e.id_usuario = u.id " +
             "where " +
             "   u.identificador =  uuid(?1)  ", nativeQuery = true)
-    Collection<Evento> findByIdentificadorUsuario(String identificador);
+    List<Evento> findByIdentificadorUsuario(String identificador);
+
+    @Query(value = " select e.* from evento e " +
+            "where " +
+            "   ?1  between e.data_inicio and e.data_fim or ?2 between e.data_inicio and e.data_fim", nativeQuery = true)
+    List<Evento> findByDatas(Date dataInicio, Date dataFim);
 }

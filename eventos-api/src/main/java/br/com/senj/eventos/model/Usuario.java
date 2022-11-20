@@ -24,13 +24,14 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, unique = true, updatable = false, columnDefinition="CHAR(36)")
+    @Column(nullable = false, unique = true, updatable = false, columnDefinition = "CHAR(36)")
     private UUID identificador = UUID.randomUUID();
+
 
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String login;
 
     @Column(nullable = false)

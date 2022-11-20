@@ -1,3 +1,3 @@
 export const notificar = (mensagem)=>{
-    alert(mensagem);
+    alert(mensagem);    
 }

@@ -2,6 +2,8 @@ import React from "react"
 
 import { StyleSheet, Text, View } from "react-native"
 
+import moment from 'moment';
+
 export default function ItemLista ({ data }) {
     return (
         <View style={styles.container}>
@@ -15,13 +17,14 @@ export default function ItemLista ({ data }) {
             </View>
             <View style={styles.viewDatas}>
                 <Text style={styles.datas}>
-                    {data.dataInicio}
+                    {moment(data.dataInicio, 'YYYY-MM-DD').format('DD/MM/YYYY')}
+                    
                 </Text>
                 <Text style={styles.datas}>
                     -
                 </Text>
                 <Text style={styles.datas}>
-                    {data.dataFim}
+                    {moment(data.dataFim, 'YYYY-MM-DD').format('DD/MM/YYYY')}
                 </Text>
             </View>
         </View>

@@ -9,3 +9,12 @@ export function findAll(identificador) {
     } { }
 
 }
+
+
+export function adicionar(evento){
+    try {
+        return api.post(`/eventos`, evento);
+    } catch (error) {
+        console.error(error);
+    } { }
+}
