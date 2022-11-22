@@ -2,3 +2,11 @@ spring:
     datasource:
         driverClassName: org.postgresql.Driver
         url: ${DATABASE_URL}
+        username: ${DATABASE_USER}
+        password: ${DATABASE_PASSWORD}
+
+    jpa:
+        defer-datasource-initialization: true
+        show-sql: true
+        hibernate:
+            ddl-auto: create

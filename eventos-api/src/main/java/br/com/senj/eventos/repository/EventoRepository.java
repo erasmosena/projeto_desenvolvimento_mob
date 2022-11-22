@@ -17,7 +17,7 @@ public interface EventoRepository extends JpaRepository<Evento,Long> {
     @Query(value = " select e.* from evento e " +
             " inner join usuario u on e.id_usuario = u.id " +
             "where " +
-            "   u.identificador =  uuid(?1)  ", nativeQuery = true)
+            "   u.identificador =  ?1  ", nativeQuery = true)
     List<Evento> findByIdentificadorUsuario(String identificador);
 
     @Query(value = " select e.* from evento e " +

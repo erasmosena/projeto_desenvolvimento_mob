@@ -1,5 +1,5 @@
---select 1 ;
-delete from public.usuario;
+select 1 ;
+--delete from public.usuario;
 
 -- INSERT INTO public.usuario(
 --      identificador, login, nome, senha)
@@ -9,7 +9,7 @@ delete from public.usuario;
 --     identificador, login, nome, senha)
 -- VALUES ( '53f050f6-66e7-11ed-9022-0242ac120002','jamesh', 'James Hetfield', 'asdf');
 
-delete from public.evento;
+-- delete from public.evento;
 
 -- INSERT INTO public.evento(
 --  data_fim, data_inicio, descricao, id_usuario, nome)

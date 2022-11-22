@@ -26,6 +26,7 @@ export default function SignOn() {
     function adicionarUsuario() {
         let usuario = cadastrar(nome, email, senha, senhaConfirmacao)
         if (usuario != undefined) {
+            //notificar(usuario)
             navigation.navigate('SignIn');
         } else {
             notificar("Não foi possível cadastrar usuário.");

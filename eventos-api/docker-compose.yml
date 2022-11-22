@@ -1,0 +1,41 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    container_name: pg_eventos
+    environment:
+      POSTGRES_PASSWORD: "1234"
+    ports:
+      - 5432:5432
+    volumes:
+      - ./docker/database:/docker-entrypoint-initdb.d
+
+  pgadmin:
+    container_name: pgamdin_eventos
+    image: dpage/pgadmin4:latest
+    restart: always
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: erasmo.sena@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: grandeurso
+    ports:
+      - 9090:80
+  app:
+    container_name: eventos_api
+    image: erasmosena/eventos-api
+    restart: always
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      PROFILE: prod
+      DATABASE_URL: jdbc:postgresql://db:5432/db_eventos
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: 1234
+    ports:
+      - 3080:8080
