@@ -10,3 +10,12 @@ Este bat faz o build , cria a imagem e executa o docker compose subindo a imagem
 É necessario ter uma VM android rodando e executar o comando 
 'npm run android'
 
+Contribuiram para o projeto : 
+
+<img src="https://avatars.githubusercontent.com/u/3819121?v=4" width="40" height="40"/><br>
+Erasmo Sena<br>
+https://github.com/erasmosena<br>
+
+<img src="https://avatars.githubusercontent.com/u/74381225?v=4" width="40" height="40"/><br>
+Leonardo Rodrigues<br>
+https://github.com/leobom97
