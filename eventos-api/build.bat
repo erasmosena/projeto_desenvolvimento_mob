@@ -1,0 +1,1 @@
+mvn package && docker build -t erasmosena/eventos-api .
