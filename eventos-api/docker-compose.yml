@@ -38,4 +38,4 @@ services:
       DATABASE_USER: postgres
       DATABASE_PASSWORD: 1234
     ports:
-      - 3080:8080
+      - 8080:8080

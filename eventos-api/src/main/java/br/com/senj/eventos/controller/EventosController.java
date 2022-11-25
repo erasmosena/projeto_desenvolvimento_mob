@@ -15,6 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,13 +43,13 @@ public class EventosController {
     @GetMapping("/usuario/{identificador}")
     public List<EventoDTO> listarTodos(@PathVariable ("identificador") String identificador){
         List<Evento> eventos = eventoRepository.findByIdentificadorUsuario(identificador);
-        return eventos.stream().map(it-> eventoMapper.eventoToEventoDto(it))
+        return eventos.stream().map(it-> eventoToEventoDto(it,identificador))
                 .collect(Collectors.toList());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> inserir(@RequestBody EventoDTO dto){
+    public ResponseEntity<Object> inserir(@RequestBody EventoDTO dto) throws ParseException {
 
         List<String>erros = validador.validarEvento(dto);
         if( erros.size() > 0 ){
@@ -54,11 +57,36 @@ public class EventosController {
             logger.info(mensagemErro);
             return ResponseEntity.badRequest().body(mensagemErro);
         }
-        Evento evento = eventoMapper.eventoDtoToEvento(dto);
-        evento.setIdUsuario(usuarioRepository.findByIdentificador(dto.getIdentificadorUsuario()).getId());
+        //Evento evento = eventoMapper.eventoDtoToEvento(dto);
+        Long idUsuario =usuarioRepository.findByIdentificador(dto.getIdentificadorUsuario()).getId();
+        Evento evento = eventoDTOToEvento(dto, idUsuario);
         Evento novoEvento = eventoRepository.save(evento);
-        return ResponseEntity.ok(eventoMapper.eventoToEventoDto(novoEvento));
+        return ResponseEntity.ok(eventoToEventoDto(novoEvento,dto.getIdentificadorUsuario()));
     }
 
-    
+    private Evento eventoDTOToEvento(EventoDTO dto, Long idUsuario) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Evento evento = Evento.builder()
+                .dataFim( sdf.parse(dto.getDataFim()))
+                .dataInicio(sdf.parse(dto.getDataInicio()))
+                .descricao(dto.getDescricao())
+                .nome(dto.getNome())
+                .idUsuario(idUsuario)
+                .build();
+        return evento;
+    }
+
+    private EventoDTO eventoToEventoDto(Evento evento, String identificadorUsuario)  {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        EventoDTO eventoDTO = EventoDTO.builder()
+                .dataFim( sdf.format(evento.getDataFim()))
+                .dataInicio(sdf.format(evento.getDataInicio()))
+                .descricao(evento.getDescricao())
+                .nome(evento.getNome())
+                .identificadorUsuario(identificadorUsuario)
+                .build();
+        return eventoDTO;
+    }
+
+
 }

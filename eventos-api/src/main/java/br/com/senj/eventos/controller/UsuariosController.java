@@ -39,7 +39,7 @@ public class UsuariosController {
     @ResponseStatus(HttpStatus.CREATED)
     public UsuarioDTO inserir(@RequestBody UsuarioDTO dto){
         Usuario usuario = usuarioMapper.usuarioDtoToUsuario(dto);
-        usuario.setIdentificador(UUID.randomUUID());
+        usuario.setIdentificador(UUID.randomUUID().toString());
         return usuarioMapper.usuarioToUsuarioDto(usuarioRepository.save(usuario));
 
     }

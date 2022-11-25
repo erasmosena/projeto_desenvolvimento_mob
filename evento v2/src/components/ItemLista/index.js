@@ -5,6 +5,9 @@ import { StyleSheet, Text, View } from "react-native"
 import moment from 'moment';
 
 export default function ItemLista ({ data }) {
+    console.log(data.dataInicio)
+    console.log(data.dataFim)
+    moment.defaultFormat = "YYYY-MM-DD HH:mm";
     return (
         <View style={styles.container}>
             <View style={styles.viewTextos}>
@@ -17,14 +20,13 @@ export default function ItemLista ({ data }) {
             </View>
             <View style={styles.viewDatas}>
                 <Text style={styles.datas}>
-                    {moment(data.dataInicio, 'YYYY-MM-DD').format('DD/MM/YYYY')}
-                    
+                    {moment(data.dataInicio,moment.defaultFormat).format('DD/MM/YYYY HH:mm:SS')}
                 </Text>
                 <Text style={styles.datas}>
                     -
                 </Text>
                 <Text style={styles.datas}>
-                    {moment(data.dataFim, 'YYYY-MM-DD').format('DD/MM/YYYY')}
+                    {moment(data.dataFim, moment.defaultFormat).format('DD/MM/YYYY HH:mm:SS')}
                 </Text>
             </View>
         </View>

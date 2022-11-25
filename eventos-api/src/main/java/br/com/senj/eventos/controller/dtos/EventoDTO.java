@@ -2,12 +2,15 @@ package br.com.senj.eventos.controller.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
-import java.util.UUID;
+import java.time.LocalDate;
+import static org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Data
+@Builder
 @AllArgsConstructor
 public class EventoDTO {
 
@@ -20,8 +23,9 @@ public class EventoDTO {
     private String descricao;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date dataInicio;
+    private String dataInicio;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date dataFim;
+    private String dataFim;
+
 }

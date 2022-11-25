@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +26,10 @@ public class Validador {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<String> validarEvento(EventoDTO dto){
+    public List<String> validarEvento(EventoDTO dto) throws ParseException {
         List<String> erros = new ArrayList<>();
-        List<Evento> eventos = eventoRepository.findByDatas(dto.getDataInicio(), dto.getDataFim());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Evento> eventos = eventoRepository.findByDatas(sdf.parse(dto.getDataInicio()),sdf.parse(dto.getDataFim()));
         if( eventos.size() > 0 ){
             erros.add("Existe um evento entre "+dto.getDataInicio()+" e "+ dto.getDataFim());
         }

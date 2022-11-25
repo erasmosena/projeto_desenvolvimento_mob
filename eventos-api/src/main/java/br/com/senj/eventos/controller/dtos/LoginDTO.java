@@ -9,6 +9,6 @@ public class LoginDTO {
 
     private String login;
     private String senha;
-    private UUID identificador;
+    private String identificador;
 
 }

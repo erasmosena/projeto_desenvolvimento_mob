@@ -11,7 +11,7 @@ public class UsuarioDTO {
 
     private long id;
 
-    private UUID identificador;
+    private String identificador;
 
     private String nome;
 

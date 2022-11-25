@@ -1,1 +1,1 @@
-mvn package && docker build -t erasmosena/eventos-api .
+mvn package -DskipTests && docker build -t erasmosena/eventos-api . && docker-compose up -d

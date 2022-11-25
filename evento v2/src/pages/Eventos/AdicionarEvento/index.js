@@ -51,7 +51,11 @@ export default function AdicionarEventos() {
                 notificar("Evento inserido");
                 navigation.goBack()
             })
-            .catch(it => notificar(`erro ao inserir\n\n ${JSON.stringify(it)}`));
+            .catch(it => {
+                notificar(`erro ao inserir`)
+                console.log(`erro ao inserir\n\n ${JSON.stringify(it)}`)
+            });
+
 
     }
 
